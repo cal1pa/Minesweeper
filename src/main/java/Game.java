@@ -14,12 +14,14 @@ public class Game {
             userInputPosition = getPositionInput();
             board.revealTile(userInputPosition);
         } while(true);
-//        int num1, num2;
-//        System.out.println("Enter coordinates");
-//        num1 = userInput.nextInt();
-//        num2 = userInput.nextInt();
-//        System.out.println(num1 + " " + num2);
-//        board.printBoard();
+/*
+        int num1, num2;
+        System.out.println("Enter coordinates");
+        num1 = userInput.nextInt();
+        num2 = userInput.nextInt();
+        System.out.println(num1 + " " + num2);
+        board.printBoard();
+*/
     }
     public boolean isPositionInputValid(Position position) {
         if (!board.validPosition(position)) {

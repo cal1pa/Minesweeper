@@ -1,11 +1,15 @@
+import java.util.Random;
+
 public class Board {
     private Tile[][] tiles;
     private int row;
     private int col;
+    private int numMines;
 
     public Board(int row, int col) {
         this.row = row;
         this.col = col;
+        numMines = 0;
 
         tiles = new Tile[row][col];
 
@@ -51,6 +55,34 @@ public class Board {
     public boolean isTileRevealed(Position position) {
         return tiles[position.row][position.col].getIsRevealed();
     }
+    public boolean isTileMine(Position position) {
+        return tiles[position.row][position.col].getIsMine();
+    }
 
+    public void addMine(Position position) {
+        if(isTileMine(position)) {
+            return;
+        }
+
+        int minX = Math.max(0, position.row-1);
+        int maxX = Math.min(row-1, position.row+1);
+        int minY = Math.max(0,position.col-1);
+        int maxY = Math.min(row-1, position.col+1);
+        for(int y = minY; y <= maxY; y++) {
+            for(int x = minX; x <= maxX; x++) {
+                tiles[x][y].addAdjacentMines();
+            }
+        }
+
+        tiles[position.row][position.col].setMine();
+        numMines++;
+
+    }
+    public void spawnMines(int maxMines) {
+        Random rand = new Random();
+        for(int i = 0; i < maxMines; i++) {
+            addMine(new Position(rand.nextInt(row), rand.nextInt(col)));
+        }
+    }
 
 }
