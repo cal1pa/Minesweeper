@@ -2,9 +2,8 @@ import java.util.Random;
 
 public class Board {
     private Tile[][] tiles;
-    private int row;
-    private int col;
-    private int numMines;
+    private int row, col;
+    private int numMines, total;
 
     public Board(int row, int col) {
         this.row = row;
@@ -18,6 +17,8 @@ public class Board {
                 tiles[x][y] = new Tile();
             }
         }
+        numMines = 0;
+        total = 0;
 
     }
 
@@ -27,13 +28,9 @@ public class Board {
             for(int x = 0; x < row; x++) {
                 System.out.print(tiles[x][y].toStr()+ "  ");
             }
-            System.out.println(" | " + (y + 1));
+            System.out.println((y + 1));
         }
-        //border
-        for(int x = 0; x < row; x++) {
-            System.out.print("_  ");
-        }
-        System.out.println();
+
 
         //column numbering
         for(int x = 0; x < row; x++) {
@@ -45,6 +42,7 @@ public class Board {
         System.out.println();
     }
     public void revealTile(Position position) {
+        total++;
         tiles[position.row][position.col].setRevealed();
     }
 
@@ -58,10 +56,18 @@ public class Board {
     public boolean isTileMine(Position position) {
         return tiles[position.row][position.col].getIsMine();
     }
+    public boolean isTileFlagged(Position position) {
+        return tiles[position.row][position.col].getIsFlagged();
+    }
 
-    public void addMine(Position position) {
+    public void flagTile(Position position) {
+      tiles[position.row][position.col].toggleFlagged();
+    }
+
+
+    public boolean addMine(Position position) {
         if(isTileMine(position)) {
-            return;
+            return false;
         }
 
         int minX = Math.max(0, position.row-1);
@@ -76,7 +82,7 @@ public class Board {
 
         tiles[position.row][position.col].setMine();
         numMines++;
-
+        return true;
     }
     public void spawnMines(int maxMines) {
         Random rand = new Random();
@@ -92,6 +98,16 @@ public class Board {
             }
         }
     }
+
+    public boolean isWon() {
+        return total + numMines == col * row;
+    }
+
+    public void status() {
+        System.out.println(total + "/" + (row*col));
+    }
+
+
 
 
 }

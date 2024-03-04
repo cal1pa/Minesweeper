@@ -56,7 +56,7 @@ public class Tile {
         } else if(getIsFlagged()) {
             return "F";
         } else {
-            return "*";
+            return "X";
         }
     }
 }

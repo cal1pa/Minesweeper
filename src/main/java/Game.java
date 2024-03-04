@@ -5,36 +5,44 @@ public class Game {
     private Board board;
     public Game() {
         userInput = new Scanner(System.in);
-        board = new Board(10,10);
-        board.spawnMines(10);
+        board = new Board(3,3);
+        board.spawnMines(2);
     }
     public void start() {
+        boolean isFlagging;
         Position userInputPosition;
         do {
             board.printBoard();
+            board.status();
             userInputPosition = getPositionInput();
-            board.revealTile(userInputPosition);
-            board.revealAll();
-        } while(true);
-/*
-        int num1, num2;
-        System.out.println("Enter coordinates");
-        num1 = userInput.nextInt();
-        num2 = userInput.nextInt();
-        System.out.println(num1 + " " + num2);
+            isFlagging = getStringOrQuit().equalsIgnoreCase("flag");
+            if(isFlagging) {
+                board.flagTile(userInputPosition);
+            } else if(board.isTileFlagged(userInputPosition)) {
+                System.out.println("You need to undo the flag first.");
+            } else {
+                board.revealTile(userInputPosition);
+            }
+        } while(!board.isWon() && (isFlagging || !board.isTileMine(userInputPosition)));
+        board.revealAll();
         board.printBoard();
-*/
+        if(board.isWon()) {
+            System.out.println("You win");
+        } else {
+            System.out.println("Oh no! A bomb");
+        }
+
     }
     public boolean isPositionInputValid(Position position) {
         if (!board.validPosition(position)) {
-            System.out.println("Invalid!");
+            System.out.println("Invalid coordinate!");
             return false;
-        }
-        if(board.isTileRevealed(position)) {
+        } else if(board.isTileRevealed(position)) {
             System.out.println("That cell is already revealed!");
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
     public Position getPositionInput() {
@@ -59,6 +67,8 @@ public class Game {
         return input;
     }
 
+
+
     public String getStringOrQuit() {
         String input = userInput.nextLine().trim();
         if(input.equalsIgnoreCase("quit")) {
@@ -67,5 +77,4 @@ public class Game {
         }
         return input;
     }
-
 }
