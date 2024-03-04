@@ -41,10 +41,19 @@ public class Board {
         }
         System.out.println();
     }
+
     public void revealTile(Position position) {
-        total++;
-        tiles[position.row][position.col].setRevealed();
+
+        if(tiles[position.row][position.col].getAdjacentMines() != 0) {
+            total++;
+            tiles[position.row][position.col].setRevealed();
+        } else {
+            revealAllAroundPoint(position);
+        }
     }
+
+
+
 
     public boolean validPosition(Position position) {
         return position.row >= 0 && position.col >= 0 && position.row < row && position.col < col;
@@ -107,7 +116,19 @@ public class Board {
         System.out.println(total + "/" + (row*col));
     }
 
+    private void revealAroundPoint(Position position) {
+        int minX = Math.max(0, position.row - 1);
+        int maxX = Math.min(row - 1, position.row + 1);
+        int minY = Math.max(0, position.col - 1);
+        int maxY = Math.min(col - 1, position.col + 1);
 
-
+        for (int y = minY; y <= maxY; y++) {
+            for (int x = minX; x <= maxX; x++) {
+                if(!tiles[x][y].getIsRevealed()) {
+                tiles[x][y].setRevealed();
+                }
+            }
+        }
+    }
 
 }
