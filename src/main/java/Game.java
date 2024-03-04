@@ -2,8 +2,10 @@ import java.util.Scanner;
 
 public class Game {
     private Scanner userInput;
+    private Board board;
     public Game() {
         userInput = new Scanner(System.in);
+        board = new Board(10,10);
     }
     public void start() {
         int num1, num2;
@@ -11,5 +13,6 @@ public class Game {
         num1 = userInput.nextInt();
         num2 = userInput.nextInt();
         System.out.println(num1 + " " + num2);
+        board.printBoard();
     }
 }
