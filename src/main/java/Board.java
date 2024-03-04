@@ -48,7 +48,7 @@ public class Board {
             total++;
             tiles[position.row][position.col].setRevealed();
         } else {
-            revealAllAroundPoint(position);
+            revealAroundPoint(position);
         }
     }
 
