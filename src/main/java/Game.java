@@ -6,6 +6,7 @@ public class Game {
     public Game() {
         userInput = new Scanner(System.in);
         board = new Board(10,10);
+        board.spawnMines(10);
     }
     public void start() {
         Position userInputPosition;
@@ -13,6 +14,7 @@ public class Game {
             board.printBoard();
             userInputPosition = getPositionInput();
             board.revealTile(userInputPosition);
+            board.revealAll();
         } while(true);
 /*
         int num1, num2;

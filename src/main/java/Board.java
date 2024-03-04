@@ -85,4 +85,13 @@ public class Board {
         }
     }
 
+    public void revealAll() {
+        for(int y = 0; y < col; y++) {
+            for(int x = 0; x < row; x++) {
+                tiles[x][y].setRevealed();
+            }
+        }
+    }
+
+
 }
