@@ -40,7 +40,17 @@ public class Board {
         }
         System.out.println();
     }
+    public void revealTile(Position position) {
+        tiles[position.row][position.col].setRevealed();
+    }
 
+    public boolean validPosition(Position position) {
+        return position.row >= 0 && position.col >= 0 && position.row < row && position.col < col;
+    }
+
+    public boolean isTileRevealed(Position position) {
+        return tiles[position.row][position.col].getIsRevealed();
+    }
 
 
 }
