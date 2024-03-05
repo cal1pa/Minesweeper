@@ -12,8 +12,8 @@ public class Game {
         boolean isFlagging;
         Position userInputPosition;
         do {
-            board.printBoard();
             board.status();
+            board.printBoard();
             userInputPosition = getPositionInput();
             isFlagging = getStringOrQuit().equalsIgnoreCase("flag");
             if(isFlagging) {

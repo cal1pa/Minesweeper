@@ -34,6 +34,7 @@ public class Board {
 
         //column numbering
         for(int x = 0; x < row; x++) {
+
             System.out.print((x+1) + " ");
             if(x + 1 < 10) {
                 System.out.print(" ");
@@ -113,7 +114,7 @@ public class Board {
     }
 
     public void status() {
-        System.out.println(total + "/" + (row*col));
+        System.out.println(total + "/" + (row*col) + " " + numMines);
     }
 
     private void revealAroundPoint(Position position) {
